@@ -60,8 +60,24 @@ namespace TEngine.Editor.UI
                     strFile.Append("using TEngine;\n\n");
                     strFile.Append($"namespace {ScriptGeneratorSetting.GetUINameSpace()}\n");
                     strFile.Append("{\n");
-                    
-                    var widgetPrefix = $"{(ScriptGeneratorSetting.GetCodeStyle() == UIFieldCodeStyle.MPrefix ? "m_" : "_")}{ScriptGeneratorSetting.GetWidgetName()}";
+
+                    //var widgetPrefix = $"{(ScriptGeneratorSetting.GetCodeStyle() == UIFieldCodeStyle.MPrefix ? "m_" : "_")}{ScriptGeneratorSetting.GetWidgetName()}";
+
+                    var widgetPrefix = "";
+
+                    if (ScriptGeneratorSetting.GetCodeStyle() == UIFieldCodeStyle.MPrefix)
+                    {
+                        widgetPrefix = $"{"m_"}{ScriptGeneratorSetting.GetWidgetName()}";
+                    }
+                    else if (ScriptGeneratorSetting.GetCodeStyle() == UIFieldCodeStyle.UnderscorePrefix)
+                    {
+                        widgetPrefix = $"{"m_"}{ScriptGeneratorSetting.GetWidgetName()}";
+                    }
+                    else
+                    {
+                        widgetPrefix = $"{ScriptGeneratorSetting.GetWidgetName()}{"_"}";
+                    }
+
                     if (root.name.StartsWith(widgetPrefix))
                     {
                         strFile.Append("\tclass " + root.name.Replace(widgetPrefix, "") + " : UIWidget\n");
@@ -71,7 +87,7 @@ namespace TEngine.Editor.UI
                         strFile.Append("\t[Window(UILayer.UI)]\n");
                         strFile.Append("\tclass " + root.name + " : UIWindow\n");
                     }
-                    
+
                     strFile.Append("\t{\n");
                 }
 
@@ -113,7 +129,8 @@ namespace TEngine.Editor.UI
             {
                 Transform child = transform.GetChild(i);
                 WriteScript(root, child, ref strVar, ref strBind, ref strOnCreate, ref strCallback, isUniTask);
-                if (child.name.StartsWith("m_item"))
+                //if (child.name.StartsWith("m_item"))
+                if (child.name.StartsWith("Item"))
                 {
                     continue;
                 }
@@ -143,9 +160,13 @@ namespace TEngine.Editor.UI
             {
                 return "OnClick" + varName.Replace("m_btn", string.Empty) + "Btn";
             }
-            else
+            else if (codeStyle == UIFieldCodeStyle.UnderscorePrefix)
             {
                 return "OnClick" + varName.Replace("_btn", string.Empty) + "Btn";
+            }
+            else
+            {
+                return "OnClick" + varName.Replace("Btn_", string.Empty) + "Btn";
             }
         }
 
@@ -156,9 +177,13 @@ namespace TEngine.Editor.UI
             {
                 return "OnToggle" + varName.Replace("m_toggle", string.Empty) + "Change";
             }
-            else
+            else if (codeStyle == UIFieldCodeStyle.UnderscorePrefix)
             {
                 return "OnToggle" + varName.Replace("_toggle", string.Empty) + "Change";
+            }
+            else
+            {
+                return "OnToggle" + varName.Replace("Toggle_", string.Empty) + "Change";
             }
         }
 
@@ -169,9 +194,13 @@ namespace TEngine.Editor.UI
             {
                 return "OnSlider" + varName.Replace("m_slider", string.Empty) + "Change";
             }
-            else
+            else if (codeStyle == UIFieldCodeStyle.UnderscorePrefix)
             {
                 return "OnSlider" + varName.Replace("_slider", string.Empty) + "Change";
+            }
+            else
+            {
+                return "OnSlider" + varName.Replace("Slider_", string.Empty) + "Change";
             }
         }
 
@@ -179,7 +208,7 @@ namespace TEngine.Editor.UI
             ref StringBuilder strCallback, bool isUniTask)
         {
             string varName = child.name;
-            
+
             string componentName = string.Empty;
 
             var rule = ScriptGeneratorSetting.GetScriptGenerateRule().Find(t => varName.StartsWith(t.uiElementRegex));
@@ -188,22 +217,21 @@ namespace TEngine.Editor.UI
             {
                 componentName = rule.componentName;
             }
-            
+
             bool isUIWidget = rule is { isUIWidget: true };
 
             if (componentName == string.Empty)
             {
                 return;
             }
-            
+
             var codeStyle = ScriptGeneratorSetting.Instance.CodeStyle;
             if (codeStyle == UIFieldCodeStyle.UnderscorePrefix)
             {
                 if (varName.StartsWith("_"))
                 {
-                    
                 }
-                else if(varName.StartsWith("m_"))
+                else if (varName.StartsWith("m_"))
                 {
                     varName = varName.Substring(1);
                 }
@@ -216,7 +244,6 @@ namespace TEngine.Editor.UI
             {
                 if (varName.StartsWith("m_"))
                 {
-                    
                 }
                 else if (varName.StartsWith("_"))
                 {
@@ -237,12 +264,15 @@ namespace TEngine.Editor.UI
                     case "Transform":
                         strBind.Append($"\t\t\t{varName} = FindChild(\"{varPath}\");\n");
                         break;
+
                     case "GameObject":
                         strBind.Append($"\t\t\t{varName} = FindChild(\"{varPath}\").gameObject;\n");
                         break;
+
                     case "AnimationCurve":
                         strBind.Append($"\t\t\t{varName} = FindChildComponent<AnimCurveObject>(\"{varPath}\").m_animCurve;\n");
                         break;
+
                     default:
                         if (isUIWidget)
                         {

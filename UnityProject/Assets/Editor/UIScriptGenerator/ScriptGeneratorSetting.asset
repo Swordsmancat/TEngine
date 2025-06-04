@@ -14,69 +14,69 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _codePath: 
   _namespace: GameLogic
-  _widgetName: item
-  CodeStyle: 0
+  _widgetName: Item
+  CodeStyle: 2
   scriptGenerateRule:
-  - uiElementRegex: m_go
+  - uiElementRegex: Go_
     componentName: GameObject
     isUIWidget: 0
-  - uiElementRegex: m_item
+  - uiElementRegex: Item_
     componentName: GameObject
     isUIWidget: 0
-  - uiElementRegex: m_tf
+  - uiElementRegex: Tf_
     componentName: Transform
     isUIWidget: 0
-  - uiElementRegex: m_rect
+  - uiElementRegex: Rect_
     componentName: RectTransform
     isUIWidget: 0
-  - uiElementRegex: m_text
+  - uiElementRegex: Text_
     componentName: Text
     isUIWidget: 0
-  - uiElementRegex: m_richText
+  - uiElementRegex: RichText_
     componentName: RichTextItem
     isUIWidget: 0
-  - uiElementRegex: m_btn
+  - uiElementRegex: Btn_
     componentName: Button
     isUIWidget: 0
-  - uiElementRegex: m_img
+  - uiElementRegex: Img_
     componentName: Image
     isUIWidget: 0
-  - uiElementRegex: m_rimg
+  - uiElementRegex: Rimg_
     componentName: RawImage
     isUIWidget: 0
-  - uiElementRegex: m_scrollBar
+  - uiElementRegex: ScrollBar_
     componentName: Scrollbar
     isUIWidget: 0
-  - uiElementRegex: m_scroll
+  - uiElementRegex: Scroll_
     componentName: ScrollRect
     isUIWidget: 0
-  - uiElementRegex: m_input
+  - uiElementRegex: Input_
     componentName: InputField
     isUIWidget: 0
-  - uiElementRegex: m_grid
+  - uiElementRegex: Grid_
     componentName: GridLayoutGroup
     isUIWidget: 0
-  - uiElementRegex: m_hlay
+  - uiElementRegex: Hlay_
     componentName: HorizontalLayoutGroup
     isUIWidget: 0
-  - uiElementRegex: m_vlay
+  - uiElementRegex: Vlay_
     componentName: VerticalLayoutGroup
     isUIWidget: 0
-  - uiElementRegex: m_slider
+  - uiElementRegex: Slider_
     componentName: Slider
     isUIWidget: 0
-  - uiElementRegex: m_toggle
+  - uiElementRegex: Toggle_
     componentName: Toggle
     isUIWidget: 0
-  - uiElementRegex: m_group
+  - uiElementRegex: Group_
     componentName: ToggleGroup
     isUIWidget: 0
-  - uiElementRegex: m_curve
+  - uiElementRegex: Curve_
     componentName: AnimationCurve
     isUIWidget: 0
-  - uiElementRegex: m_canvasGroup
+  - uiElementRegex: CanvasGroup_
     componentName: CanvasGroup
     isUIWidget: 0
-  - uiElementRegex: m_tmp
+  - uiElementRegex: TMP_
     componentName: TextMeshProUGUI
     isUIWidget: 0

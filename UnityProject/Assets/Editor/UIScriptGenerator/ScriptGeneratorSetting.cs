@@ -12,14 +12,20 @@ namespace TEngine.Editor.UI
         /// </summary>
         [InspectorName("Field names start with underscore (e.g., _variable)")]
         UnderscorePrefix,
-        
+
         /// <summary>
         /// Field names start with m_ prefix (e.g., m_variable)
         /// </summary>
         [InspectorName("Field names start with m_ prefix (e.g., m_variable)")]
         MPrefix,
+
+        /// <summary>
+        /// Field names start with Type_ prefix (e.g., m_variable)
+        /// </summary>
+        [InspectorName("Field names start with Type_ prefix (e.g., Btn_variable)")]
+        TypePrefix,
     }
-    
+
     [Serializable]
     public class ScriptGenerateRuler
     {
@@ -95,7 +101,7 @@ namespace TEngine.Editor.UI
         public string Namespace => _namespace;
 
         public string WidgetName => _widgetName;
-        
+
         public UIFieldCodeStyle CodeStyle = UIFieldCodeStyle.UnderscorePrefix;
 
         [SerializeField]
@@ -124,7 +130,6 @@ namespace TEngine.Editor.UI
         };
 
         public List<ScriptGenerateRuler> ScriptGenerateRule => scriptGenerateRule;
-
 
         [MenuItem("TEngine/Create ScriptGeneratorSetting")]
         private static void CreateAutoBindGlobalSetting()
@@ -181,7 +186,7 @@ namespace TEngine.Editor.UI
 
             return Instance.CodePath;
         }
-        
+
         public static string GetWidgetName()
         {
             if (Instance == null)
